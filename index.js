@@ -1,25 +1,21 @@
-// Importar librerías
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import userRoutes from "./routes/userRoutes.js";
 
-dotenv.config(); // Cargar las variables del archivo .env
-
+dotenv.config();
 const app = express();
 
-// Conexión a MongoDB
+app.use(express.json());
+
+// 🔗 Rutas
+app.use("/api/v1/users", userRoutes);
+
+// 🔌 Conexión a MongoDB
 mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log("✅ Conectado exitosamente a MongoDB Atlas"))
-  .catch((error) => console.error("❌ Error al conectar a MongoDB:", error));
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ Conectado a MongoDB Atlas"))
+  .catch((error) => console.log("❌ Error al conectar a MongoDB:", error));
 
-// Puerto de ejecución
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 Servidor corriendo en el puerto ${PORT}`));
-
-mongoose.connect("mongodb+srv://Sandycat:Sandy2019@cluster0.mongodb.net/tuBD?retryWrites=true&w=majority")
-  .then(() => console.log("Conectado a MongoDB"))
-  .catch(err => console.error(err));
-
-
-
+// 🚀 Servidor
+app.listen(3000, () => console.log("🚀 Servidor corriendo en el puerto 3000"));
